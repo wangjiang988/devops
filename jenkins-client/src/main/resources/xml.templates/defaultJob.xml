@@ -1,0 +1,29 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.40">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.83">
+    <script>node {
+    stage (&quot;git&quot;) {
+            echo &quot;git clone&quot;;
+            git branch: &apos;master&apos;, credentialsId: &apos;02550e58-1a5c-40d8-9d67-efd78eff2436&apos;, url: &apos;http://192.168.33.11:10080/root/ordev-svc.git&apos;
+    }
+    
+    stage (&quot;build&quot;) {
+        sh &quot;docker login --username=wangjiang --password=Abc.1234 192.168.33.20&quot;
+        sh &quot;./build.sh -v v1.0.0&quot;;
+    }
+}
+
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
